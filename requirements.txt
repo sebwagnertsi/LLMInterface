@@ -1,0 +1,16 @@
+langchain
+langchain-community
+langchain-core
+langchain-openai
+langchain-anthropic
+langgraph
+openai
+pandas
+pyyaml
+typing-inspect
+python-dotenv
+scikit-learn
+matplotlib
+seaborn
+dateparser
+loguru
