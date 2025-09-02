@@ -82,14 +82,14 @@ def call_model(messages) -> str:
     raise RuntimeError(f"Modell-Aufruf nach {max_retries} Versuchen fehlgeschlagen")
 
 
-def run_prompt(system_prompt,email_text):
+def run_prompt(system_prompt, user_prompt):
     """
     Runs a prompt on an email text
     """
     
     prompt = [
             ('system', system_prompt),
-            ('user', email_text)
+            ('user', user_prompt)
         ]
     
     response = call_model(prompt)
@@ -110,16 +110,21 @@ st.html("""
     </style>
     """
 )
-st.title("Prompt Spielwiese")
+st.title("Prompt Workshop")
 
-# Input textarea for customer email
+# Input textarea for system prompt
 st.subheader("KI-Anweisungen (System Prompt)")
 system_prompt = st.text_area("Hier wird die KI instruiert...", height=200)
 
+# Input textarea for user prompt
+st.subheader("User Prompt")
+user_prompt = st.text_area("Hier wird die Benutzeranfrage eingegeben...", height=200)
 
 # Input textarea for customer email
 st.subheader("Customer Email")
 email_text = st.text_area("Hier kommt die Kunden-E-Mail rein...", height=300)
+
+user_prompt = user_prompt + "\n\nKunden E-Mail: " + email_text
 
 # Submit button
 if st.button("Prompt Ausführen"):
@@ -128,7 +133,7 @@ if st.button("Prompt Ausführen"):
             # Process the email using classify_email function
             try:
                 
-                result = run_prompt(system_prompt, email_text)
+                result = run_prompt(system_prompt, user_prompt)
                 # Display the output
                 
                 st.markdown(f'**KI Ausgabewerte:**')
